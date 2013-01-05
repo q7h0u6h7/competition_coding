@@ -1,7 +1,7 @@
 #include <iostream>
 #include <vector>
 #include <map>
-
+#include <string>
 using namespace std;
 
 class Block{
@@ -135,6 +135,7 @@ void Board::move_onto(int block_num_a, int block_num_b){
 void Board::move_over(int block_num_a, int block_num_b){
   int old_bin = clear_off_top(block_num_a).first;
   int new_bin = get_current_bin_from_block_num(block_num_b);
+  cout << "old" << old_bin << " " << new_bin << endl;
   move(old_bin, new_bin);
 }
 
@@ -148,8 +149,7 @@ void Board::pile_over(int block_num_a, int block_num_b){
   pile(block_num_a, new_bin);
 }
 
-
-int main(){
+void test(){
   int num_blocks;
   cin >> num_blocks;
   Board a_board(num_blocks);
@@ -159,9 +159,45 @@ int main(){
   a_board.move(9,6);
   a_board.move(7,6);
   cout << a_board << endl;
+
   //a_board.move_onto(5,6);
   //a_board.move_over(5,6);
   //a_board.pile_onto(5,6);
+
   a_board.pile_over(5,6);
   cout << a_board;
+}
+
+int main(){
+  int size_of_board;
+  string cmd_1;
+  int a;
+  string cmd_2;
+  int b;
+  cin >> size_of_board;
+  Board a_board(size_of_board);
+  while (cin >> cmd_1 and cin >> a and
+	 cin >> cmd_2 and cin >> b){
+    cout << "command: " << cmd_1 << "_" << cmd_2 << " " << a << " " << b << endl;
+    if (a_board.is_illegal_move(a,b)){
+	continue;
+      }
+    if (cmd_1.compare("move")==0){
+      if (cmd_2.compare("onto")==0){
+	a_board.move_onto(a,b);
+      }
+      else{
+	a_board.move_over(a,b);
+      }
+    }
+    else{
+      if (cmd_2.compare("onto")==0){
+	a_board.pile_onto(a,b);
+      }
+      else{
+	a_board.pile_over(a,b);
+      }
+    }
+    cout << a_board;
+  }
 }
