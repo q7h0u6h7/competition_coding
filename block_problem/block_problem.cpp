@@ -1,7 +1,7 @@
 #include <iostream>
 #include <vector>
 #include <map>
-#include <string>
+
 using namespace std;
 
 class Block{
@@ -37,9 +37,8 @@ class Board{
   int get_current_bin_from_block_num(int);
   pair < int, vector <int> > clear_off_top(int);
   void pile(int, int);
-  //void move(int, int);
-public:
   void move(int, int);
+public:
   Board(int);
   ~Board();
   friend ostream& operator<<(ostream&, const Board&);
@@ -135,7 +134,6 @@ void Board::move_onto(int block_num_a, int block_num_b){
 void Board::move_over(int block_num_a, int block_num_b){
   int old_bin = clear_off_top(block_num_a).first;
   int new_bin = get_current_bin_from_block_num(block_num_b);
-  cout << "old" << old_bin << " " << new_bin << endl;
   move(old_bin, new_bin);
 }
 
@@ -149,25 +147,6 @@ void Board::pile_over(int block_num_a, int block_num_b){
   pile(block_num_a, new_bin);
 }
 
-void test(){
-  int num_blocks;
-  cin >> num_blocks;
-  Board a_board(num_blocks);
-  a_board.move(1,5);
-  a_board.move(3,5);
-  a_board.move(8,5);
-  a_board.move(9,6);
-  a_board.move(7,6);
-  cout << a_board << endl;
-
-  //a_board.move_onto(5,6);
-  //a_board.move_over(5,6);
-  //a_board.pile_onto(5,6);
-
-  a_board.pile_over(5,6);
-  cout << a_board;
-}
-
 int main(){
   int size_of_board;
   string cmd_1;
@@ -178,7 +157,6 @@ int main(){
   Board a_board(size_of_board);
   while (cin >> cmd_1 and cin >> a and
 	 cin >> cmd_2 and cin >> b){
-    cout << "command: " << cmd_1 << "_" << cmd_2 << " " << a << " " << b << endl;
     if (a_board.is_illegal_move(a,b)){
 	continue;
       }
@@ -198,6 +176,6 @@ int main(){
 	a_board.pile_over(a,b);
       }
     }
-    cout << a_board;
   }
+  cout << a_board;
 }
