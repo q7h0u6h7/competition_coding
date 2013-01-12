@@ -64,7 +64,23 @@ public:
   void setup_game(vector<string>);
   Table(): piles(13){};
   bool play_game();
+  friend ostream& operator<< (ostream&, Table&);
 };
+
+ostream& operator<< (ostream& os, Table& a_table)
+{
+  for (int i=0; i<13; i++){
+    list <Card*> pile = a_table.piles[i];
+    for (list <Card*>::iterator it = pile.begin();
+	 it != pile.end();
+	 ++it){
+      os << **it << " ";
+    }
+    os << endl;
+  }
+  return os;
+}
+
 
 void Table::setup_game(vector<string> rank_suits){
   int i = 0;
@@ -73,8 +89,8 @@ void Table::setup_game(vector<string> rank_suits){
        it != rank_suits.end(); 
        it++){
     Card *a_card = new Card( (*it)[0], (*it)[1]);
-    pile_num = ( (i % 13) );
-    piles[pile_num].push_back(a_card);
+    pile_num = ( 12-(i % 13));
+    piles[pile_num].push_front(a_card);
     ++i;
   }
 }
@@ -84,12 +100,9 @@ bool Table::play_game(){
   Card a_card = *(piles[pile_num].back());
   int num_cards = 0;
   while (a_card.is_down){
-    if (not piles[pile_num].front()->is_down){
-        break;
-      }
     cout << a_card << endl;
-    piles[pile_num].pop_back();
     a_card.is_down = false;
+    piles[pile_num].pop_back();
     pile_num = a_card.get_pos();
     piles[pile_num].push_front(&a_card);
     a_card = *(piles[pile_num].back());
@@ -116,8 +129,8 @@ int main(){
       }
       rank_suits.push_back(rs);
     }
-    reverse(rank_suits.begin(),rank_suits.end());
     a_table.setup_game(rank_suits);
+    cout << a_table;
     a_table.play_game();
   }
 }
