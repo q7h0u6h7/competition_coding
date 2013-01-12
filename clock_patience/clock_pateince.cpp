@@ -1,6 +1,8 @@
 #include <iostream>
+#include <list>
 #include <vector>
 #include <map>
+#include <algorithm>
 
 using namespace std;
 
@@ -17,22 +19,29 @@ public:
   bool is_down;
 };
 
+ostream& operator<< (ostream& os, Card& a_card)
+{
+  os << a_card.get_rank() 
+     << a_card.get_suit();
+  return os;
+}
+
 Card::Card(char r, char s){
   rank = r;
   suit = s;
-  rank_2_pos["1"] = 1;
-  rank_2_pos["2"] = 2;
-  rank_2_pos["3"] = 3;
-  rank_2_pos["4"] = 4;
-  rank_2_pos["5"] = 5;
-  rank_2_pos["6"] = 6;
-  rank_2_pos["7"] = 7;
-  rank_2_pos["8"] = 8;
-  rank_2_pos["9"] = 9;
+  rank_2_pos["A"] = 0;
+  rank_2_pos["2"] = 1;
+  rank_2_pos["3"] = 2;
+  rank_2_pos["4"] = 3;
+  rank_2_pos["5"] = 4;
+  rank_2_pos["6"] = 5;
+  rank_2_pos["7"] = 6;
+  rank_2_pos["8"] = 7;
+  rank_2_pos["9"] = 8;
+  rank_2_pos["T"] = 9;
   rank_2_pos["J"] = 10;
   rank_2_pos["Q"] = 11;
   rank_2_pos["K"] = 12;
-  rank_2_pos["A"] = 13;
   is_down = true;
 }
 
@@ -50,24 +59,49 @@ int Card::get_pos(){
 
 class Table{
 private:
-   vector< vector<Card*> > piles;
+   vector< list<Card*> > piles;
 public:
   void setup_game(vector<string>);
   Table(): piles(13){};
+  bool play_game();
 };
 
 void Table::setup_game(vector<string> rank_suits){
-  //Card a_card(rs[0], rs[1]);
-  //table[( 12 - (i % 13) )].push_back(&a_card);
-  for (vector<string>::iterator i)
+  int i = 0;
+  int pile_num;
+  for (vector<string>::iterator it = rank_suits.begin();
+       it != rank_suits.end(); 
+       it++){
+    Card *a_card = new Card( (*it)[0], (*it)[1]);
+    pile_num = ( (i % 13) );
+    piles[pile_num].push_back(a_card);
+    ++i;
+  }
 }
 
-bool play_game(){
-  // Setup table
-  string rs;
-  
- // Play game
-  //cout << table[0][0]->get_rank()<< endl;
+bool Table::play_game(){
+  int pile_num = 12; //first card is the last dealt
+  Card a_card = *(piles[pile_num].back());
+  int num_cards = 0;
+  while (a_card.is_down){
+    if (not piles[pile_num].front()->is_down){
+        break;
+      }
+    cout << a_card << endl;
+    piles[pile_num].pop_back();
+    a_card.is_down = false;
+    pile_num = a_card.get_pos();
+    piles[pile_num].push_front(&a_card);
+    a_card = *(piles[pile_num].back());
+    ++num_cards;
+  };
+  string zero = "";
+  if (num_cards<10){
+    zero = "0";
+  }
+  cout << zero << num_cards << "," << a_card << endl;
+  cout << endl;
+  return false;
 }
 
 int main(){
@@ -82,7 +116,8 @@ int main(){
       }
       rank_suits.push_back(rs);
     }
+    reverse(rank_suits.begin(),rank_suits.end());
     a_table.setup_game(rank_suits);
+    a_table.play_game();
   }
 }
-
