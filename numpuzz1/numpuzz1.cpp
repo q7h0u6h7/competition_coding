@@ -45,14 +45,21 @@ void Board::move(char c_move){
 }
 
 ostream& operator<<(ostream& os, Board& a_board){
-  for (int i=0; i< (a_board.board_size*a_board.board_size); i++){
-      os << a_board.board[i] << " ";
+  int board_size = a_board.board_size;
+  // iterate up until last value, then print last
+  // value after loop (to avoid worrying about
+  // extra spaces and new lines at the end of board.
+  for (int i=0; i < a_board.board.size()-1; i++){
+      os << a_board.board[i] % 10;
       if (i > 0 and 
-	  (i+1) % a_board.board_size == 0 and
-	  i < (a_board.board_size*a_board.board_size) -1){
+	  (i+1) % board_size == 0){ 
 	os << endl;
       }
+      else{
+	os << " ";
+      }
   }
+  os << a_board.board.back() % 10;
   return os;
 }
 
