@@ -2,7 +2,6 @@
 #include <list>
 #include <vector>
 #include <map>
-#include <algorithm>
 
 using namespace std;
 
@@ -81,7 +80,6 @@ ostream& operator<< (ostream& os, Table& a_table)
   return os;
 }
 
-
 void Table::setup_game(vector<string> rank_suits){
   int i = 0;
   int pile_num;
@@ -100,7 +98,6 @@ bool Table::play_game(){
   Card a_card = *(piles[pile_num].back());
   int num_cards = 0;
   while (a_card.is_down){
-    cout << a_card << endl;
     a_card.is_down = false;
     piles[pile_num].pop_back();
     pile_num = a_card.get_pos();
@@ -113,7 +110,6 @@ bool Table::play_game(){
     zero = "0";
   }
   cout << zero << num_cards << "," << a_card << endl;
-  cout << endl;
   return false;
 }
 
@@ -130,7 +126,6 @@ int main(){
       rank_suits.push_back(rs);
     }
     a_table.setup_game(rank_suits);
-    cout << a_table;
     a_table.play_game();
   }
 }
