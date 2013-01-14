@@ -3,20 +3,6 @@
 
 using namespace std;
 
-int naive_print_house_nums(int house_num){
-  double sum = house_num * (house_num-1) / 2;
-  double upper_num = house_num + 1;
-  while (sum > 0){
-    sum -= upper_num;
-    ++upper_num;
-  }
-  if (sum == 0){
-    cout << house_num << " " << upper_num-1 << endl;
-    return 1;
-  }
-  return 0;
-}
-
 double compute_sum(double n, double m, double sum){
   return n * n + n + m - m * m - 2 * sum;
 }
