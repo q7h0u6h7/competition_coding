@@ -36,6 +36,7 @@ int solve(int num){
   }
   if (num >= 50){
     num -= 50;
+    num_matches += 2;
     //cout << "L";
   }
   if (num >= 40){
