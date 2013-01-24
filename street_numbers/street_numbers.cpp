@@ -1,5 +1,6 @@
 #include <iostream>
 #include <cmath>
+#include <stdio.h>
 
 using namespace std;
 
@@ -13,12 +14,11 @@ int print_house_nums(double house_num){
   double n = floor(sqrt( (-1) * compute_sum(0, house_num+1, sum)));
   if (compute_sum(n, house_num+1, sum) == 0){
     printf ("%10.0lf", house_num);
-    printf ("%10.0lf \n", n);
+    printf ("%10.0lf\n", n);
     return 1;
   }
   return 0;
 }
-
 
 int main(){
   int num_printed = 0;

@@ -19,7 +19,7 @@ if __name__ == '__main__':
     num_printed = 0
     i = 2;
     #print_house_nums(204)
-    while (num_printed < 10):
+    while (num_printed < 5):
         if print_house_nums(i) == 1:
             num_printed += 1;
         i += 1

@@ -83,9 +83,16 @@ int main(){
   cout << "The maximum value for type short int is:  "
        << numeric_limits<short int>::max( )
        << endl;
-  if (4357186184021382204544 < numeric_limits<double>::max( )){
-    cout << "wow: " << endl;
-  }
+
+
+  double x = 3.0e+300;
+  double y = 4.0e+300;
+  long long int z =  4357186184021382204544;
+  cout << "z" << z << endl;
+  cout << sqrt(x*x + y*y) << endl;
+//   if (4357186184021382204544 < numeric_limits<double>::max( )){
+//     cout << "wow: " << endl;
+//   }
 
 
 //   while (cin >> n >> p){
