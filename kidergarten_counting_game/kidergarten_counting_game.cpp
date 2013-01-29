@@ -1,34 +1,30 @@
 #include <iostream>
-#include <sstream>
 
 using namespace std;
 
 
 /*
-The below won't work because you need to split words on anything that is not a letter.
+The below uses anything onther than alpha as a delimiter.
  */
 
-bool is_word(string word){
-  for (string::iterator it = word.begin();
-       it != word.end();
+int count_words(string line){
+
+  bool current_isalpha = false;
+  int word_count = 0;
+  for (string::iterator it = line.begin();
+       it != line.end();
        ++it){
     if (isalpha(*it)){
-      return true;
+      if (not current_isalpha){
+        ++word_count;
+      }
+      current_isalpha=true;
+    }
+    else{
+      current_isalpha = false;
     }
   }
-  return false;
-}
-
-int count_words(string line){
-  stringstream ss(line);
-  string word;
-  int num_words = 0;
-  while (ss >> word){
-    if (is_word(word)){
-      ++num_words;
-    }
-  }
-  return num_words;
+  return word_count;
 }
 
 int main(){
