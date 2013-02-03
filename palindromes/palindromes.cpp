@@ -14,12 +14,10 @@ string solve(string word, map<char, char> rev_map){
   for (;
        i < (word.size() / 2);
        ++i){
-    //cout << word[i];
     myStack.push(word[i]);
   }
 
   if (word.size() % 2){
-    //cout << word[i];
     if (rev_map[word[i]] != word[i]){
       is_mirror = false;
     }
@@ -31,7 +29,6 @@ string solve(string word, map<char, char> rev_map){
        ++i){
     match = myStack.top();
     myStack.pop();
-    //cout << match << " " << word[i] << endl;
     if (match != word[i]){
       is_palindrome = false;
     }
@@ -50,7 +47,7 @@ string solve(string word, map<char, char> rev_map){
   if (is_palindrome){
     return "is a regular palindrome.";
   }
-  return "is not a palindrome";
+  return "is not a palindrome.";
 }
 
 int main(){
